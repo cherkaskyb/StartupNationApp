@@ -1,0 +1,107 @@
+﻿<Window x:Class="StartupNationApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:StartupNationApp"
+        xmlns:interact="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+        xmlns:behaviors="clr-namespace:StartupNationApp.Behaviors"
+        mc:Ignorable="d"
+        DataContext="{Binding Main, Source={StaticResource ViewModelLocator}}"
+        WindowStartupLocation="CenterScreen"
+        Title="{Binding Title, Mode=OneTime}" Height="600" Width="1000">
+
+    <StackPanel Orientation="Vertical">
+        <StackPanel Orientation="Vertical">
+            <TextBlock Text="File Loader"/>
+            <Button Content="Load Data file (.csv/.startups)" 
+                    Click="ChooseFileClick"/>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="File to load:" Margin="0,0,4,0"/>
+                <TextBlock Text="{Binding InputFile, Mode=TwoWay}" x:Name="InputFileTextBox"/>
+            </StackPanel>
+            <Separator BorderThickness="40" BorderBrush="Black"/>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Text="Process Data:"  Margin="0,0, 20,0"/>
+            <Button Command="{Binding GetCompaniesCommand}"
+                    Content="Get"/>
+            <Button Command="{Binding Stop}"
+                    Content="Stop"
+                    Background="Red"/>
+            <TextBlock Text="#Startups:"  Margin="20,0, 20,0"/>
+            <TextBlock Text="{Binding NumOfObjectsInConteiner}"  Margin="2,0, 0,0"/>
+
+            <TextBlock Text="Start time:"  Margin="20,0, 20,0"/>
+            <TextBlock Text="{Binding LoadCompaniesStartTime}"  Margin="2,0, 0,0"/>
+
+            <TextBlock Text="Duration:"  Margin="20,0, 20,0"/>
+            <TextBlock Text="{Binding LoadDuration}"  Margin="2,0, 0,0"/>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
+            <TextBlock Text="Got founds before (months):"/>
+            <TextBox Text="{Binding Filter.LastFundedBeforeMonths, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
+                     Width="50"/>
+            <TextBlock Text="Have at least (Mil$):"/>
+            <TextBox Text="{Binding Filter.GotAtLeast, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
+                     Width="50"/>
+            
+            <Button Content="Filter" Command="{Binding FilterCommand}"/>
+            <Button Content="Clear" Command="{Binding ClearFilterCommand}"/>
+            <TextBlock Text="Displayset: " Margin="10,0,3,0"/>
+            <TextBlock Text="{Binding NumOfFilteredObjects, Mode=OneWay}"/>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Text="Stage:"/>
+            <ListBox ItemsSource="{Binding Filter.Stages}">
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal"/>
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <CheckBox IsChecked="{Binding IsSelected}"/>
+                            <TextBlock Text="{Binding Stage, Mode=OneTime}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </StackPanel>
+        <DataGrid x:Name="dataGrid"
+                  ItemsSource="{Binding DisplayedCompanies}"
+                  Height="300"
+                  ScrollViewer.VerticalScrollBarVisibility="Visible"
+                  AutoGenerateColumns="False"
+                  SelectedItem="{Binding SelectedCompany}"
+                  IsReadOnly="True">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Startup" Binding="{Binding Name}"/>
+                <DataGridTextColumn Header="Stage" Binding="{Binding Stage}"/>
+                <DataGridTextColumn Header="Last Funding" Binding="{Binding LastFunding, StringFormat= \{0:MM-yy\}}"/>
+                <DataGridTextColumn Header="Amount (Mil$)" Binding="{Binding AmountRaisedInMilUsd}"/>
+                <DataGridTextColumn Header="Established" Binding="{Binding Established, StringFormat= \{0:MM-yy\}}"/>
+                <DataGridTextColumn Header="Finder" Binding="{Binding LinkToFinder}"/>
+                <DataGridTextColumn Header="Homepage" Binding="{Binding LinkToHomepage}"/>
+            </DataGrid.Columns>
+            <DataGrid.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Open homepage" Command="{Binding OpenHomepageCommand}" />
+                    <MenuItem Header="Open Finder" Command="{Binding OpenFinderCommand}" />
+                </ContextMenu>
+            </DataGrid.ContextMenu>
+        </DataGrid>
+        <ListBox ItemsSource="{Binding Messages}" Height="100"
+                 ScrollViewer.VerticalScrollBarVisibility="Visible" Margin="0,0,-0.4,0">
+            <interact:Interaction.Behaviors>
+                <behaviors:ListBoxScrollIntoViewBehavior />
+            </interact:Interaction.Behaviors>
+        </ListBox>
+        <Button Content="Save to .startups file">
+            <interact:Interaction.Behaviors>
+                <behaviors:ChooseFileAndExecuteBehavior CommandToExecute="{Binding SaveToFileCommand}"/>
+            </interact:Interaction.Behaviors>
+        </Button>
+    </StackPanel>
+</Window>
