@@ -6,12 +6,8 @@ using System.Reflection;
 
 namespace Testing.CSVDataReader
 {
-    [TestClass]
     public class Test_CSVReader
     {
-        private CSVDataRetriver _reader;
-
-        [TestInitialize]
         public void TestInitialize()
         {
             var path = GetPathToInputFile();
@@ -24,11 +20,6 @@ namespace Testing.CSVDataReader
             var baseDir = Path.Combine(Path.Combine(currentDir, ".."), "..");
             var fileDir = Path.Combine(Path.Combine(baseDir, "CSVReader"), "InputFiles");
             return Path.Combine(fileDir, "company_export.csv");
-        }
-
-        [TestMethod]
-        public void ReadSingleCompany()
-        {
         }
     }
 }

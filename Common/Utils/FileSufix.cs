@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace StartupNationApp.Utils
+namespace Common.Utils
 {
     public static class FileSufix
     {
@@ -18,10 +18,18 @@ namespace StartupNationApp.Utils
 
             return $"{filepath}.{sufix}";
         }
+
+        public static bool Is(string filename, SufixType sufix)
+        {
+            var words = filename.Split('.');
+            return words.Last().ToLower() == sufix.ToString().ToLower();
+        }
     }
 
     public enum SufixType
     {
-        Startups, Dealflow
+        Startups, Dealflow,
+        Zip,
+        Csv
     }
 }

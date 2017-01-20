@@ -114,13 +114,13 @@ namespace StartupNationApp.ViewModels
             _messageService = messageService;
             _retriverFactory = new DataRetriverFactory(_messageService);
 
-            Title = string.Format("Mila's Startup nation! Version: {0}", 
-                Assembly.GetExecutingAssembly().GetName().Version);
+            Title = $"Mila's Startup nation! Version: {Assembly.GetExecutingAssembly().GetName().Version.ToString(3)}";
 
             Filter = new FilterObject()
             {
                 LastFundedBeforeMonths = 6,
                 Stages = FilterStage.CreateAll(),
+                DealFlows = FilterDealFlow.CreateAll(),
                 GotAtLeast  = 1.5f
             };
 
@@ -239,14 +239,14 @@ namespace StartupNationApp.ViewModels
             {
                 return new RelayCommand<string>(pathToOutputFile =>
                 {
-                    pathToOutputFile = FileSufix.CreateSufix(pathToOutputFile);
+                    var pathToOutputFileWithSufix = FileSufix.CreateSufix(pathToOutputFile, SufixType.Startups);
                     if (IsRetriveInProgress)
                     {
                         MessageBox.Show("Can't save while retriving data. Stop retrive first!", "Error");
                         return;
                     }
 
-                    if (File.Exists(pathToOutputFile))
+                    if (File.Exists(pathToOutputFileWithSufix))
                     {
                         var result = MessageBox.Show("File already exists, replase it?", "Question", MessageBoxButton.YesNo);
                         if (result == MessageBoxResult.No)
@@ -312,6 +312,7 @@ namespace StartupNationApp.ViewModels
         {
             return company.AmountRaisedInMilUsd > Filter.GotAtLeast &&
                 Filter.Stages.Any(s=> s.Stage == company.Stage && s.IsSelected) &&
+                Filter.DealFlows.Any(d => d.DealFlow == company.DealFlow && d.IsSelected) && 
                 company.LastFunding.AddMonths(Filter.LastFundedBeforeMonths).CompareTo(DateTime.Now) < 0;
         }
 

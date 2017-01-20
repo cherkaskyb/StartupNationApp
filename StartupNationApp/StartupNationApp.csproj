@@ -82,6 +82,7 @@
     <Compile Include="Utils\ChooseFIleDialog.cs" />
     <Compile Include="Utils\FileSufix.cs" />
     <Compile Include="Utils\FilterObject.cs" />
+    <Compile Include="Utils\FIlter\FilterDealFlow.cs" />
     <Compile Include="Utils\FIlter\FilterStage.cs" />
     <Compile Include="ViewModelLocator.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />

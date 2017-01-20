@@ -6,15 +6,28 @@
         xmlns:local="clr-namespace:StartupNationApp"
         xmlns:interact="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         xmlns:behaviors="clr-namespace:StartupNationApp.Behaviors"
+        xmlns:common="clr-namespace:Common;assembly=Common"
+        xmlns:system="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
         DataContext="{Binding Main, Source={StaticResource ViewModelLocator}}"
         WindowStartupLocation="CenterScreen"
-        Title="{Binding Title, Mode=OneTime}" Height="600" Width="1000">
+        Title="{Binding Title, Mode=OneTime}" Height="600" Width="1000"
+        Closing="Window_Closing">
 
+    <Window.Resources>
+        <ObjectDataProvider x:Key="EnumDataProvider" 
+                        MethodName="GetValues" 
+                        ObjectType="{x:Type system:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="common:DealFlowType"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+    </Window.Resources>
+    
     <StackPanel Orientation="Vertical">
         <StackPanel Orientation="Vertical">
             <TextBlock Text="File Loader"/>
-            <Button Content="Load Data file (.csv/.startups)" 
+            <Button Content="Load Data file (.zip/.csv/.startups)" 
                     Click="ChooseFileClick"/>
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="File to load:" Margin="0,0,4,0"/>
@@ -69,21 +82,42 @@
                 </ListBox.ItemTemplate>
             </ListBox>
         </StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Text="DealFlow:"/>
+            <ListBox ItemsSource="{Binding Filter.DealFlows}">
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal"/>
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <CheckBox IsChecked="{Binding IsSelected}"/>
+                            <TextBlock Text="{Binding DealFlow, Mode=OneTime}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </StackPanel>
         <DataGrid x:Name="dataGrid"
                   ItemsSource="{Binding DisplayedCompanies}"
                   Height="300"
                   ScrollViewer.VerticalScrollBarVisibility="Visible"
                   AutoGenerateColumns="False"
-                  SelectedItem="{Binding SelectedCompany}"
-                  IsReadOnly="True">
+                  SelectedItem="{Binding SelectedCompany}">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Startup" Binding="{Binding Name}"/>
-                <DataGridTextColumn Header="Stage" Binding="{Binding Stage}"/>
-                <DataGridTextColumn Header="Last Funding" Binding="{Binding LastFunding, StringFormat= \{0:MM-yy\}}"/>
-                <DataGridTextColumn Header="Amount (Mil$)" Binding="{Binding AmountRaisedInMilUsd}"/>
-                <DataGridTextColumn Header="Established" Binding="{Binding Established, StringFormat= \{0:MM-yy\}}"/>
-                <DataGridTextColumn Header="Finder" Binding="{Binding LinkToFinder}"/>
-                <DataGridTextColumn Header="Homepage" Binding="{Binding LinkToHomepage}"/>
+                <DataGridComboBoxColumn Header="DealFlow"  
+                                        IsReadOnly="False"
+                                        SelectedItemBinding="{Binding DealFlow, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                        ItemsSource="{Binding Source={StaticResource EnumDataProvider}}"/>
+                <DataGridTextColumn Header="Startup" Binding="{Binding Name}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Stage" Binding="{Binding Stage}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Last Funding" Binding="{Binding LastFunding, StringFormat= \{0:MM-yy\}}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Amount (Mil$)" Binding="{Binding AmountRaisedInMilUsd}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Established" Binding="{Binding Established, StringFormat= \{0:MM-yy\}}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Finder" Binding="{Binding LinkToFinder}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Homepage" Binding="{Binding LinkToHomepage}" IsReadOnly="True"/>
             </DataGrid.Columns>
             <DataGrid.ContextMenu>
                 <ContextMenu>
@@ -98,7 +132,7 @@
                 <behaviors:ListBoxScrollIntoViewBehavior />
             </interact:Interaction.Behaviors>
         </ListBox>
-        <Button Content="Save to .startups file">
+        <Button Content="Save to file (.Zip)">
             <interact:Interaction.Behaviors>
                 <behaviors:ChooseFileAndExecuteBehavior CommandToExecute="{Binding SaveToFileCommand}"/>
             </interact:Interaction.Behaviors>

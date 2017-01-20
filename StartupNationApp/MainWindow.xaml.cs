@@ -30,5 +30,12 @@ namespace StartupNationApp
         {
             InputFileTextBox.Text = ChooseFIleDialog.GetFilePath(checkFileExists: true);
         }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            var result = MessageBox.Show("Are you sure you want to quit? there may be unsaved changes...", 
+                "Quiting are we?", MessageBoxButton.YesNo);
+            e.Cancel = result == MessageBoxResult.No;
+        }
     }
 }

@@ -10,7 +10,8 @@ namespace StartupNationApp.Utils
 {
     public class FilterObject
     {
-        public IEnumerable<FilterStage> Stages {get; set;}
+        public IEnumerable<FilterStage> Stages { get; set; }
+        public IEnumerable<FilterDealFlow> DealFlows {get; set;}
         public int LastFundedBeforeMonths {get; set;}
         public double GotAtLeast { get; set; }
     }

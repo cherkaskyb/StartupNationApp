@@ -10,4 +10,9 @@ namespace Common
     {
         A,B, Bootstrapped, Seed, Public , Cplus
     }
+
+    public enum DealFlowType
+    {
+        None, NotRelevant, Approached
+    }
 }

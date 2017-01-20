@@ -35,6 +35,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.IO.Compression.FileSystem" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -48,8 +49,11 @@
     <Compile Include="CSVDataRetriver.cs" />
     <Compile Include="DataParserHelper.cs" />
     <Compile Include="DataRetriverFactory.cs" />
+    <Compile Include="DealFlowReader.cs" />
+    <Compile Include="FileInterface\FileExtention.cs" />
     <Compile Include="HashSetConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="FileInterface\TempFileWorker.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj">

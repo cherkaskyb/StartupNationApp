@@ -17,7 +17,8 @@ namespace Common.Model
         public CompanyStage Stage { get; set; }
         public float AmountRaisedInMilUsd { get; set; }
         public string LinkToFinder { get; set; }
-        public string LinkToHomepage { get; set; } 
+        public string LinkToHomepage { get; set; }
+        public DealFlowType DealFlow { get; set; }
 
         #endregion
 
@@ -43,6 +44,11 @@ namespace Common.Model
             {
                 Established = DataParserHelper.ParseDateTime(value);
             }
+        }
+
+        public string GetDealFlowString()
+        {
+            return $"{Name}\t{DealFlow}";
         }
 
         #region Filling privates

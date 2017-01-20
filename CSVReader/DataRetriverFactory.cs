@@ -1,4 +1,5 @@
 ﻿using Common.Contracts;
+using Common.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,14 +19,13 @@ namespace CSVReader
 
         public IDataRetriver GetRetriver(string file)
         {
-            var words = file.Split('.');
             IDataRetriver retriver = null;
-            if (words.Last().ToLower() == "csv")
+            if (FileSufix.Is(file, SufixType.Csv))
             {
                 retriver = new CSVDataRetriver(_messageService);
             }
 
-            if (words.Last().ToLower() == "startups")
+            if (FileSufix.Is(file, SufixType.Zip) || FileSufix.Is(file, SufixType.Startups))
             {
                 retriver = new CompanyReader();
             }
