@@ -1,12 +1,13 @@
 ﻿using Common.Contracts;
 using Common.Utils;
+using CSVReader.DataReaders;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CSVReader
+namespace CSVReader.DataReaders
 {
     public class DataRetriverFactory
     {
@@ -22,7 +23,7 @@ namespace CSVReader
             IDataRetriver retriver = null;
             if (FileSufix.Is(file, SufixType.Csv))
             {
-                retriver = new CSVDataRetriver(_messageService);
+                retriver = new CSV2WebQueriesDataRetriver(_messageService);
             }
 
             if (FileSufix.Is(file, SufixType.Zip) || FileSufix.Is(file, SufixType.Startups))

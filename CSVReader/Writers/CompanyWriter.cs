@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.IO.Compression;
 using CSVReader.FileInterface;
 
-namespace CSVReader
+namespace CSVReader.Writers
 {
     public class CompanyWriter
     {

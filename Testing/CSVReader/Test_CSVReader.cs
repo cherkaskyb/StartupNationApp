@@ -11,7 +11,7 @@ namespace Testing.CSVDataReader
         public void TestInitialize()
         {
             var path = GetPathToInputFile();
-            //_reader = new CSVDataRetriver();
+            //_reader = new CSV2WebQueriesDataRetriver();
         }
 
         private static string GetPathToInputFile()

@@ -44,12 +44,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CompanyReader.cs" />
-    <Compile Include="CompanyWriter.cs" />
-    <Compile Include="CSVDataRetriver.cs" />
+    <Compile Include="DataReaders\CompanyReader.cs" />
+    <Compile Include="Writers\CompanyWriter.cs" />
+    <Compile Include="DataReaders\CSVDataRetriver.cs" />
     <Compile Include="DataParserHelper.cs" />
-    <Compile Include="DataRetriverFactory.cs" />
-    <Compile Include="DealFlowReader.cs" />
+    <Compile Include="DataReaders\DataRetriverFactory.cs" />
+    <Compile Include="DataReaders\DealFlowReader.cs" />
     <Compile Include="FileInterface\FileExtention.cs" />
     <Compile Include="HashSetConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

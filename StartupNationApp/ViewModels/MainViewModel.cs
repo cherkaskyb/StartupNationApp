@@ -17,6 +17,8 @@ using System.IO;
 using StartupNationApp.Utils;
 using StartupNationApp.Utils.FIlter;
 using System.Diagnostics;
+using CSVReader.Writers;
+using CSVReader.DataReaders;
 
 namespace StartupNationApp.ViewModels
 {

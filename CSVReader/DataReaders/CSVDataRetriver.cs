@@ -12,9 +12,9 @@ using System.Xml;
 using HtmlAgilityPack;
 using System.Diagnostics;
 
-namespace CSVReader
+namespace CSVReader.DataReaders
 {
-    public class CSVDataRetriver : IDataRetriver
+    public class CSV2WebQueriesDataRetriver : IDataRetriver
     {
         #region Consts
 
@@ -38,7 +38,7 @@ namespace CSVReader
 
         #endregion
 
-        public CSVDataRetriver(IMessageService messageService)
+        public CSV2WebQueriesDataRetriver(IMessageService messageService)
         {
             _messageService = messageService;
             CurrentIndexInLine = 0;

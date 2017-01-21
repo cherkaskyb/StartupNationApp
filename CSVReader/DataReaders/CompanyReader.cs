@@ -11,7 +11,7 @@ using CSVReader.FileInterface;
 using Common.Utils;
 using Common;
 
-namespace CSVReader
+namespace CSVReader.DataReaders
 {
     class CompanyReader : IDataRetriver
     {
