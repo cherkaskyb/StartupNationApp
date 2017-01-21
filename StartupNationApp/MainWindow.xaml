@@ -11,7 +11,7 @@
         mc:Ignorable="d"
         DataContext="{Binding Main, Source={StaticResource ViewModelLocator}}"
         WindowStartupLocation="CenterScreen"
-        Title="{Binding Title, Mode=OneTime}" Height="600" Width="1000"
+        Title="{Binding Title, Mode=OneTime}" Height="620" Width="1000"
         Closing="Window_Closing">
 
     <Window.Resources>
